@@ -1,0 +1,37 @@
+{
+  "name": "general-vfv-bot",
+  "version": "1.0.0",
+  "description": "a bot for VFV server exclusively",
+  "main": "app.js",
+  "scripts": {
+    "test": "node .",
+    "dev": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JamesCicada/General-VFV-BOT.git"
+  },
+  "keywords": [
+    "discord",
+    "general",
+    "server",
+    "bot"
+  ],
+  "author": "JamesCicada",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/JamesCicada/General-VFV-BOT/issues"
+  },
+  "homepage": "https://github.com/JamesCicada/General-VFV-BOT#readme",
+  "dependencies": {
+    "@discordjs/builders": "^0.15.0",
+    "@discordjs/rest": "^0.6.0-dev.1654646876-ecc6600",
+    "discord-api-types": "^0.33.5",
+    "discord.js": "^13.0.0",
+    "dotenv": "^16.0.1",
+    "fs": "^0.0.1-security",
+    "mongoose": "^6.3.6",
+    "node-url-shortener": "^2.0.3",
+    "nodemon": "^2.0.16"
+  }
+}
