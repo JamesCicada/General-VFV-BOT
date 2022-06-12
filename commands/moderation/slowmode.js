@@ -27,15 +27,4 @@ module.exports = {
         }
     },
 };
-
-/*module.exports = {
-    callback: (message, ...args) => {
-        message.channel.setRateLimitPerUser(args[0])
-        if (args[0] > 0){
-            message.reply(`this channel is now in slowmode (${args[0]} seconds)`)
-        }else {
-            message.reply('this channel is no longer in slowmode')
-        }
-        
-    },
-}*/
+//DONE

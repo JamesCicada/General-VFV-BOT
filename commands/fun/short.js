@@ -13,22 +13,16 @@ module.exports = {
         ),
     async execute(interaction) {
         let baseUrl = interaction.options.getString("url");
-        shortUrl.short(`${baseUrl}`, function (err, url) {
-            console.log(url);
-            interaction.reply(url);
-        });
+        if (!baseUrl.includes(".")) {
+            interaction.reply({
+                content: "this is not a url (i.e www.google.com)",
+                ephemeral: true,
+            });
+        } else {
+            shortUrl.short(`${baseUrl}`, function (err, url) {
+                interaction.reply(url);
+            });
+        }
     },
 };
-
-/*const shortUrl = require('node-url-shortener')
-module.exports = {
-    callback: (message, ...args) => {
-        
-        shortUrl.short(`${args}`, function (err, url) {
-            console.log(url);
-            message.reply(url)
-        });
-        
-    }
-}*/
 //DONE

@@ -28,7 +28,7 @@ module.exports = {
                         url: `${avatar}`,
                     },
                     author: {
-                        name: `${mentioned || interaction.user.tag}`,
+                        name: `${mentioned.tag || interaction.user}`,
                         icon_url: `${avatar}`,
                     },
                 },
