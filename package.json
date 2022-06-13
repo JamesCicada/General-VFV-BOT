@@ -26,13 +26,18 @@
   "homepage": "https://github.com/JamesCicada/General-VFV-BOT#readme",
   "dependencies": {
     "@discordjs/builders": "^0.15.0",
+    "@discordjs/opus": "^0.5.3",
     "@discordjs/rest": "^0.6.0-dev.1654646876-ecc6600",
+    "@discordjs/voice": "^0.10.0",
     "discord-api-types": "^0.33.5",
     "discord.js": "^13.0.0",
     "dotenv": "^16.0.1",
+    "ffmpeg": "^0.0.4",
     "fs": "^0.0.1-security",
+    "libsodium-wrappers": "^0.7.10",
     "mongoose": "^6.3.6",
     "node-url-shortener": "^2.0.3",
-    "nodemon": "^2.0.16"
+    "nodemon": "^2.0.16",
+    "randomcolor": "^0.6.2"
   }
 }

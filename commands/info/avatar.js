@@ -1,4 +1,5 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
+const randomColor = require("randomcolor");
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -11,6 +12,7 @@ module.exports = {
         ),
 
     async execute(interaction) {
+        let color = randomColor().slice(1);
         let member = interaction.options.getUser("user") || interaction.user;
         let mentioned = interaction.options.getUser("user");
         let avatar = member.displayAvatarURL({ size: 1024, dynamic: true });
@@ -18,7 +20,7 @@ module.exports = {
             embeds: [
                 {
                     title: "How Gorgeous! <3",
-                    color: 2427689,
+                    color: color,
                     footer: {
                         icon_url:
                             "https://cdn.discordapp.com/avatars/933341730827276318/57d817db788fb5e5b143795aab71a898.webp?size=1024",
@@ -28,13 +30,16 @@ module.exports = {
                         url: `${avatar}`,
                     },
                     author: {
-                        name: `${mentioned.tag || interaction.user}`,
+                        name: `${member.tag}`,
                         icon_url: `${avatar}`,
                     },
                 },
             ],
         };
         await interaction.reply(embed);
+        /*member.fetch(member.id, false).then((user) => {
+            user.send(`${member} checked your Avatar`);
+        });*/
     },
 };
 //DONE*/
