@@ -1,4 +1,3 @@
-const { channel } = require("diagnostics_channel");
 const { Client, Intents, Collection } = require("discord.js");
 const randomColor = require("randomcolor");
 const client = new Client({
@@ -17,6 +16,7 @@ const client = new Client({
         Intents.FLAGS.GUILD_MESSAGES,
         Intents.FLAGS.GUILD_MEMBERS,
         Intents.FLAGS.DIRECT_MESSAGES,
+        Intents.FLAGS.GUILD_VOICE_STATES,
     ],
     partials: ["CHANNEL"],
 });
@@ -24,6 +24,18 @@ const fs = require("fs");
 const mongoose = require("mongoose");
 const guildMemberAdd = require("./events/guildMemberAdd");
 require("dotenv").config();
+const { DisTube } = require("distube");
+const { YtDlpPlugin } = require("@distube/yt-dlp");
+const { SpotifyPlugin } = require("@distube/spotify");
+
+client.distube = new DisTube(client, {
+    emitNewSongOnly: true,
+    leaveOnFinish: true,
+    emitAddSongWhenCreatingQueue: false,
+    plugins: [new SpotifyPlugin(), new YtDlpPlugin()],
+    
+});
+module.exports = client;
 
 client.commands = new Collection();
 
