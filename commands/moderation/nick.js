@@ -17,12 +17,24 @@ module.exports = {
                 .setDescription("the new nickname")
                 .setRequired(true)
         ),
-    async execute(interaction) {
-        let member = interaction.options.getUser("user");
-        let newNick = interaction.options.getString("newnick");
-        let target = member;
-        target.setNickname(`${newNick}`);
-        await interaction.reply(`${user}'s nickname was changed to ${newNick}`);
+    /**
+     *
+     * @param {*} interaction
+     * @param {Client} client
+     */
+    async execute(interaction, client) {
+        try {
+            let Targetmember = interaction.options.getMember("user");
+            let newNick = interaction.options.getString("newnick");
+
+            //console.log(member, newNick);
+            await Targetmember.setNickname(newNick);
+            await interaction.reply(
+                `${Targetmember.username}'s nickname was changed to ${newNick}`
+            );
+        } catch (err) {
+            console.log(err);
+        }
     },
 };
 //DONE

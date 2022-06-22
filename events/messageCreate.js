@@ -1,5 +1,6 @@
 module.exports = (client, message) => {
     // Ignore all bots
+    const cooldowns = new Map();
     if (message.author.bot) return;
 
     // Ignore messages not starting with the prefix (in config.json)

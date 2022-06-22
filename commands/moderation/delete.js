@@ -11,22 +11,20 @@ module.exports = {
                 .setDescription("how many message do you wanna delete?")
                 .setRequired(true)
                 .setMaxValue(100)
+                .setMinValue(1)
         ),
     async execute(interaction) {
         let numberOfMessages = interaction.options.getInteger("number");
         let channel = interaction.channel;
-        if (numberOfMessages === 0) {
-            interaction.reply(
-                "you needa specify how many messages you wanna delete stupid!"
-            );
-            setTimeout(() => interaction.deleteReply(), 3000);
-        } else {
+        try {
             await channel.bulkDelete(numberOfMessages).then(() => {
                 interaction.reply(
                     "`Deleted " + numberOfMessages + " messages`"
                 );
                 setTimeout(() => interaction.deleteReply(), 3000);
             });
+        } catch (err) {
+            console.log(err);
         }
     },
 };

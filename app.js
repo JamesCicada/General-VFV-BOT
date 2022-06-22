@@ -22,18 +22,17 @@ const client = new Client({
 });
 const fs = require("fs");
 const mongoose = require("mongoose");
-const guildMemberAdd = require("./events/guildMemberAdd");
 require("dotenv").config();
 const { DisTube } = require("distube");
 const { YtDlpPlugin } = require("@distube/yt-dlp");
 const { SpotifyPlugin } = require("@distube/spotify");
+const testSchema = require("./Schemas/addToDB");
 
 client.distube = new DisTube(client, {
     emitNewSongOnly: true,
     leaveOnFinish: true,
     emitAddSongWhenCreatingQueue: false,
     plugins: [new SpotifyPlugin(), new YtDlpPlugin()],
-    
 });
 module.exports = client;
 
@@ -114,16 +113,6 @@ client.on("messageCreate", async (message) => {
     }
 });*/
 /*client.on('ready', async () => {
-  let handler = require('./command-handler')
-  if (handler.default) handler = handler.default
 
-  handler(client)
-  await mongoose.connect(process.env.MONGO_URI, {
-    keepAlive: true,
-
-  })
-  //client.channels.cache.get('825529224206876682').send("Hi! I'm online :)")
-  console.log('the bot is online')
-  client.user.setActivity(`v!help`, { type: "WATCHING" });
   
 });*/

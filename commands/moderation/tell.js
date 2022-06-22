@@ -18,25 +18,31 @@ module.exports = {
                 .setRequired(true)
         ),
     async execute(interaction) {
-        let member = interaction.options.getUser("user");
-        let message = interaction.options.getString("message");
-        await interaction.reply({
-            content: `the message was sent successfully to ${member.tag}`,
-            ephemeral: true,
-        });
-        await interaction.guild.channels.cache.get("985773188753547334").send(
-            //`'${}' told '${}' '${}' `
-            "`" +
-                interaction.user.tag +
-                " told " +
-                member.tag +
-                " " +
-                message +
-                " in dms `"
-        );
-        member.fetch(member.id, false).then((user) => {
-            user.send(`${message}`);
-        });
+        try {
+            let member = interaction.options.getUser("user");
+            let message = interaction.options.getString("message");
+            await interaction.reply({
+                content: `the message was sent successfully to ${member.tag}`,
+                ephemeral: true,
+            });
+            await interaction.guild.channels.cache
+                .get("985773188753547334")
+                .send(
+                    //`'${}' told '${}' '${}' `
+                    "`" +
+                        interaction.user.tag +
+                        " told " +
+                        member.tag +
+                        " " +
+                        message +
+                        " in dms `"
+                );
+            member.fetch(member.id, false).then((user) => {
+                user.send(`${message}`);
+            });
+        } catch (err) {
+            console.log(err);
+        }
     },
 };
 //DONE
