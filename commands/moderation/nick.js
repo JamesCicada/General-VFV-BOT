@@ -30,10 +30,13 @@ module.exports = {
             //console.log(member, newNick);
             await Targetmember.setNickname(newNick);
             await interaction.reply(
-                `${Targetmember.username}'s nickname was changed to ${newNick}`
+                `${Targetmember}'s nickname was changed to ${newNick}`
             );
         } catch (err) {
             console.log(err);
+            await interaction.reply(
+                "i don't seem to have the permission to change that member's nickname"
+            );
         }
     },
 };
