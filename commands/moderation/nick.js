@@ -17,12 +17,7 @@ module.exports = {
                 .setDescription("the new nickname")
                 .setRequired(true)
         ),
-    /**
-     *
-     * @param {*} interaction
-     * @param {Client} client
-     */
-    async execute(interaction, client) {
+    async execute(interaction) {
         try {
             let Targetmember = interaction.options.getMember("user");
             let newNick = interaction.options.getString("newnick");
