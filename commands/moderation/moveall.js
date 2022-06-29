@@ -10,12 +10,14 @@ module.exports = {
                 .setName("fromchannel")
                 .setDescription("the channel you wanna move everyone from")
                 .setRequired(true)
+                .addChannelTypes(2)
         )
         .addChannelOption((option) =>
             option
                 .setName("tochannel")
                 .setDescription("the channel you wanna move everyone to")
                 .setRequired(false)
+                .addChannelTypes(2)
         ),
     async execute(interaction) {
         try {
