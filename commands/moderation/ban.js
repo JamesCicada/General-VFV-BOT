@@ -45,7 +45,9 @@ module.exports = {
                     },
                 ],
             };
-            if (member == interaction.user) {
+            if (!interaction.member.permissions.has("BAN_MEMBERS")) {
+                interaction.reply("you don't have permission to do that");
+            } else if (member == interaction.user) {
                 interaction.reply(
                     `${interaction.user} you can't ban yourself silly :P`
                 );
