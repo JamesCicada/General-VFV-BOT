@@ -34,6 +34,39 @@ client.distube = new DisTube(client, {
     emitAddSongWhenCreatingQueue: false,
     plugins: [new SpotifyPlugin(), new YtDlpPlugin()],
 });
+client.voiceGenerator = new Collection();
+
+/*client.on("voiceStateUpdate", (oldState, newState) => {
+    try {
+        if (
+            oldState.voiceChannel !== 992179944912339056 &&
+            newState.voiceChannel === 992179944912339056
+        ) {
+            console.log("joined");
+        }
+        if (newState.channelID === null)
+            //left
+            console.log("user left channel", oldState.channelID);
+        else if (oldState.channelID === null)
+            // joined
+            console.log("user joined channel", newState.channelID);
+        // moved
+        else
+            console.log(
+                "user moved channels",
+                oldState.channelID,
+                newState.channelID
+            );
+        if (
+            oldState.channelID !== 992179944912339056 &&
+            newState.channelID === 992179944912339056
+        ) {
+            console.log("joined");
+        }
+    } catch (err) {
+        console.log(err);
+    }
+});*/
 module.exports = client;
 
 client.commands = new Collection();
@@ -54,6 +87,7 @@ const commandFolders = fs.readdirSync("./commands");
     client.handleCommands(commandFolders, "./commands");
     client.login(process.env.TOKEN);
 })();
+
 client.on("messageCreate", async (message) => {
     const attachment = message.attachments.first();
     if (message.author.bot) return;
