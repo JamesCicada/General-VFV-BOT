@@ -18,7 +18,7 @@ module.exports = {
         )
         .addSubcommand((option) =>
             option
-                .setName("ban")
+                .setName("reject")
                 .setDescription("ban someone from your vc")
                 .addUserOption((option) =>
                     option
@@ -105,51 +105,79 @@ module.exports = {
                     case "invite":
                         {
                             const targetMember = options.getMember("user");
-                            voiceChannel.permissionOverwrites.edit(
-                                targetMember,
-                                {
-                                    CONNECT: true,
-                                }
-                            );
-                            interaction.reply({
-                                content: "invitation was sent",
-                                ephemeral: true,
-                            });
-                            interaction.guild.channels.cache
-                                .get("992223702710243499")
-                                .send({
+                            if (targetMember.id == interaction.user.id) {
+                                interaction.reply(
+                                    `${interaction.user}you can't invite yourself silly 😒`
+                                );
+                            } else {
+                                if (
+                                    targetMember.voice.channel &&
+                                    targetMember.voice.channel.id ==
+                                        voiceChannel.id
+                                )
+                                    targetMember.voice.setChannel(
+                                        "992179944912339056"
+                                    );
+                                interaction.reply({
                                     embeds: [
                                         Embed.setDescription(
-                                            `${targetMember} you were invited to join <#${voiceChannel.id}> by ${member}`
+                                            `${targetMember} was invited to yor channel`
                                         ),
                                     ],
                                 });
+                                voiceChannel.permissionOverwrites.edit(
+                                    targetMember,
+                                    {
+                                        CONNECT: true,
+                                    }
+                                );
+                                interaction.reply({
+                                    content: "invitation was sent",
+                                    ephemeral: true,
+                                });
+                                interaction.guild.channels.cache
+                                    .get("992223702710243499")
+                                    .send({
+                                        embeds: [
+                                            Embed.setDescription(
+                                                `${targetMember} you were invited to join <#${voiceChannel.id}> by ${member}`
+                                            ),
+                                        ],
+                                    });
+                            }
                         }
                         break;
-                    case "ban":
+                    case "reject":
                         {
                             const targetMember =
                                 options.getMember("targetmember");
-                            voiceChannel.permissionOverwrites.edit(
-                                targetMember,
-                                {
-                                    CONNECT: false,
-                                }
-                            );
-                            if (
-                                targetMember.voice.channel &&
-                                targetMember.voice.channel.id == voiceChannel.id
-                            )
-                                targetMember.voice.setChannel(
-                                    "992179944912339056"
+                            if (targetMember.id == interaction.user.id) {
+                                interaction.reply(
+                                    `${interaction.user}you can't ban yourself silly 😒`
                                 );
-                            interaction.reply({
-                                embeds: [
-                                    Embed.setDescription(
-                                        `${targetMember} was banned from yor channel`
-                                    ),
-                                ],
-                            });
+                            } else {
+                                voiceChannel.permissionOverwrites.edit(
+                                    targetMember,
+                                    {
+                                        CONNECT: false,
+                                    }
+                                );
+                                if (
+                                    targetMember.voice.channel &&
+                                    targetMember.voice.channel.id ==
+                                        voiceChannel.id
+                                )
+                                    targetMember.voice.setChannel(
+                                        "992179944912339056"
+                                    );
+                                interaction.reply({
+                                    embeds: [
+                                        Embed.setDescription(
+                                            `${targetMember} was banned from yor channel`
+                                        ),
+                                    ],
+                                });
+                            }
                         }
                         break;
                     case "private":
