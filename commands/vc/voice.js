@@ -51,143 +51,175 @@ module.exports = {
                             { name: "off", value: "off" }
                         )
                 )
-        ),
-    /*.addSubcommand((option) =>
+        )
+        .addSubcommand((option) =>
             option
-                .setName("private")
-                .setDescription("make your channel private")
-                .addStringOption(
-                    (option) =>
-                        option
-                            .setName("turn")
-                            .setDescription(
-                                "on = private channel / off = public channel"
-                            )
-                            .setRequired(true).addChoices[
-                            ({ name: "on", value: "on" },
-                            { name: "off", value: "off" })
-                        ]
+                .setName("limit")
+                .setDescription("limit how many members can join your vc")
+                .addIntegerOption((option) =>
+                    option
+                        .setName("number")
+                        .setDescription("how many users do you wanna allow")
+                        .setMaxValue(99)
+                        .setRequired(true)
                 )
-        ),*/
+        ),
     async execute(interaction, client) {
-        //const subCommand = interaction;
         const voiceChannel = interaction.member.voice.channel;
         const Embed = new MessageEmbed().setColor("RANDOM");
         const ownedChannel = client.voiceGenerator.get(interaction.member.id);
         const { options, member, guild } = interaction;
-        //console.log(ownedChannel);
-
-        if (!voiceChannel)
-            return interaction.reply({
-                embeds: [
-                    Embed.setDescription("you're not in a vc").setColor("RED"),
-                ],
-            });
-        if (!ownedChannel || voiceChannel.id !== ownedChannel) {
-            console.log(voiceChannel.id);
-            interaction.reply({
-                embeds: [
-                    Embed.setDescription(
-                        "you're not the owner of this channel"
-                    ).setColor("RED"),
-                ],
-            });
-        }
-
-        switch (options.getSubcommand()) {
-            case "name":
-                {
-                    const newName = options.getString("name");
-                    voiceChannel.edit({ name: newName });
-                    interaction.reply({
-                        embeds: [
-                            Embed.setDescription(
-                                `channel was named to ${newName}`
-                            ),
-                        ],
-                    });
-                }
-                break;
-            case "invite":
-                {
-                    const targetMember = options.getMember("user");
-                    voiceChannel.permissionOverwrites.edit(targetMember, {
-                        CONNECT: true,
-                    });
-                    interaction.reply({
-                        content: "invitation was sent",
-                        ephemeral: true,
-                    });
-                    interaction.guild.channels.cache
-                        .get("992223702710243499")
-                        .send({
-                            embeds: [
-                                Embed.setDescription(
-                                    `${targetMember} you were invited to join <#${voiceChannel.id}> by ${member}`
-                                ),
-                            ],
-                        });
-                }
-                break;
-            case "ban":
-                {
-                    const targetMember = options.getMember("targetmember");
-                    voiceChannel.permissionOverwrites.edit(targetMember, {
-                        CONNECT: false,
-                    });
-                    if (
-                        targetMember.voice.channel &&
-                        targetMember.voice.channel.id == voiceChannel.id
-                    )
-                        targetMember.voice.setChannel("992179944912339056");
-                    interaction.reply({
-                        embeds: [
-                            Embed.setDescription(
-                                `${targetMember} was banned from yor channel`
-                            ),
-                        ],
-                    });
-                }
-                break;
-            case "private":
-                {
-                    const turnChoice = options.getString("toggle");
-                    switch (turnChoice) {
-                        case "off":
-                            {
-                                voiceChannel.permissionOverwrites.edit(
-                                    guild.id,
-                                    { CONNECT: null },
-                                    interaction.reply({
-                                        embeds: [
-                                            Embed.setDescription(
-                                                "voice channel is now private"
-                                            ),
-                                        ],
-                                    })
+        try {
+            if (!voiceChannel)
+                return interaction.reply({
+                    embeds: [
+                        Embed.setDescription("you're not in a vc").setColor(
+                            "RED"
+                        ),
+                    ],
+                });
+            if (!ownedChannel || voiceChannel.id !== ownedChannel) {
+                console.log(voiceChannel.id);
+                interaction.reply({
+                    embeds: [
+                        Embed.setDescription(
+                            "you're not the owner of this channel"
+                        ).setColor("RED"),
+                    ],
+                });
+            } else {
+                switch (options.getSubcommand()) {
+                    case "name":
+                        {
+                            const newName = options.getString("name");
+                            voiceChannel.edit({ name: newName });
+                            interaction.reply({
+                                embeds: [
+                                    Embed.setDescription(
+                                        `channel was named to ${newName}`
+                                    ),
+                                ],
+                            });
+                        }
+                        break;
+                    case "invite":
+                        {
+                            const targetMember = options.getMember("user");
+                            voiceChannel.permissionOverwrites.edit(
+                                targetMember,
+                                {
+                                    CONNECT: true,
+                                }
+                            );
+                            interaction.reply({
+                                content: "invitation was sent",
+                                ephemeral: true,
+                            });
+                            interaction.guild.channels.cache
+                                .get("992223702710243499")
+                                .send({
+                                    embeds: [
+                                        Embed.setDescription(
+                                            `${targetMember} you were invited to join <#${voiceChannel.id}> by ${member}`
+                                        ),
+                                    ],
+                                });
+                        }
+                        break;
+                    case "ban":
+                        {
+                            const targetMember =
+                                options.getMember("targetmember");
+                            voiceChannel.permissionOverwrites.edit(
+                                targetMember,
+                                {
+                                    CONNECT: false,
+                                }
+                            );
+                            if (
+                                targetMember.voice.channel &&
+                                targetMember.voice.channel.id == voiceChannel.id
+                            )
+                                targetMember.voice.setChannel(
+                                    "992179944912339056"
                                 );
-                            }
-                            break;
-                        case "on":
-                            {
-                                voiceChannel.permissionOverwrites.edit(
-                                    guild.id,
+                            interaction.reply({
+                                embeds: [
+                                    Embed.setDescription(
+                                        `${targetMember} was banned from yor channel`
+                                    ),
+                                ],
+                            });
+                        }
+                        break;
+                    case "private":
+                        {
+                            const turnChoice = options.getString("toggle");
+                            switch (turnChoice) {
+                                case "off":
                                     {
-                                        CONNECT: false,
-                                    },
-                                    interaction.reply({
-                                        embeds: [
-                                            Embed.setDescription(
-                                                "voice channel is now public"
-                                            ),
-                                        ],
-                                    })
-                                );
+                                        voiceChannel.permissionOverwrites.edit(
+                                            guild.id,
+                                            { CONNECT: null },
+                                            interaction.reply({
+                                                embeds: [
+                                                    Embed.setDescription(
+                                                        "voice channel is now private"
+                                                    ),
+                                                ],
+                                            })
+                                        );
+                                    }
+                                    break;
+                                case "on":
+                                    {
+                                        voiceChannel.permissionOverwrites.edit(
+                                            guild.id,
+                                            {
+                                                CONNECT: false,
+                                            },
+                                            interaction.reply({
+                                                embeds: [
+                                                    Embed.setDescription(
+                                                        "voice channel is now public"
+                                                    ),
+                                                ],
+                                            })
+                                        );
+                                    }
+                                    break;
                             }
-                            break;
-                    }
+                        }
+                        break;
+                    case "limit":
+                        {
+                            const limit = options.getInteger("number");
+                            voiceChannel.edit({
+                                userLimit: limit,
+                            });
+                            if (limit === 0) {
+                                await interaction.reply({
+                                    embeds: [
+                                        Embed.setDescription(
+                                            `channel is now unlimeted`
+                                        ),
+                                    ],
+                                });
+                            } else {
+                                await interaction.reply({
+                                    embeds: [
+                                        Embed.setDescription(
+                                            `channel is now limited to ${limit} users`
+                                        ),
+                                    ],
+                                });
+                            }
+                        }
+                        break;
                 }
-                break;
+            }
+        } catch (err) {
+            console.log(err);
         }
     },
 };

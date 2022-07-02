@@ -12,12 +12,6 @@ module.exports = {
                 .setRequired(true)
                 .setMaxValue(100)
                 .setMinValue(1)
-        )
-        .addUserOption((option) =>
-            option
-                .setName("target")
-                .setDescription("who's messages do you wanna delete")
-                .setRequired(false)
         ),
     async execute(interaction) {
         let numberOfMessages = interaction.options.getInteger("number");
