@@ -23,10 +23,14 @@ module.exports = {
         let username = targettedUser.username;
         let userId = targettedUser.id;
         let ball = await memberSchema.findOne({ discordId: userId });
-        try {
+        try if(!ball){
+            'you had no balance i created a bank account for ya 😊'
+        }else {
             await interaction.reply(
                 `your balance is \n Bank : ${ball.ballance}𝒱  \n wallet: ${ball.wallet}𝒱`
             );
+        }
+            
         } catch (err) {
             console.log(err);
         }
