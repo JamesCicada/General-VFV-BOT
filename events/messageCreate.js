@@ -1,3 +1,4 @@
+const mongoose = require("mongoose");
 module.exports = (client, message) => {
     // Ignore all bots
     const cooldowns = new Map();
