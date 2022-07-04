@@ -24,27 +24,9 @@ module.exports = {
         let userId = targettedUser.id;
         let ball = await memberSchema.findOne({ discordId: userId });
         try {
-            if (!ball) {
-                await new memberSchema({
-                    username: username,
-                    discordId: userId,
-                    ballance: 1000,
-                    cooldown: 0,
-                })
-                    .save()
-                    .then(
-                        await interaction.reply(
-                            `your ballance is \n Bank : 1000𝒱   \n wallet: 100𝒱`
-                        )
-                    );
-                //console.log(ball);
-            } else {
-                //await memberSchema.findOne({ ball: userId });
-                await interaction.reply(
-                    `your balance is \n Bank : ${ball.ballance}𝒱  \n wallet: ${ball.wallet}𝒱`
-                );
-                //console.log(ball.ballance);
-            }
+            await interaction.reply(
+                `your balance is \n Bank : ${ball.ballance}𝒱  \n wallet: ${ball.wallet}𝒱`
+            );
         } catch (err) {
             console.log(err);
         }
