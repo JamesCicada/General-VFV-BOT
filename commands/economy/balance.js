@@ -20,7 +20,7 @@ module.exports = {
         //let cdTimer = timer + 25;
         let targettedUser =
             interaction.options.getUser("user") || interaction.user;
-        let username = targettedUser.username;
+        //let username = targettedUser.username;
         let userId = targettedUser.id;
         let ball = await memberSchema.findOne({ discordId: userId });
         try {
@@ -28,7 +28,7 @@ module.exports = {
                 ("you had no balance i created a bank account for ya 😊");
             } else {
                 await interaction.reply(
-                    `your balance is \n Bank : ${ball.ballance}𝒱  \n wallet: ${ball.wallet}𝒱`
+                    `your balance is \n 💳 Bank : ${ball.ballance}𝒱  \n 👛 wallet: ${ball.wallet}𝒱`
                 );
             }
         } catch (err) {
