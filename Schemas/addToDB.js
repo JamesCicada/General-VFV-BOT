@@ -29,7 +29,6 @@ const memberSchema = new mongoose.Schema({
     },
     dailyCooldown: {
         type: String,
-        required: true,
     },
 });
 module.exports = mongoose.model("memberModels", memberSchema);
