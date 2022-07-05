@@ -37,55 +37,61 @@ module.exports = {
         let expired = moment(date).add({ hours: 1 }).format();
         let checkTimeout = await ball.coinflipCooldown;
         let timeLeft = await moment(checkTimeout).diff(nowDate, "minutes");
+        //console.log(timeLeft);
 
         try {
-            if (!left || left == 0) {
-                interaction.reply(
-                    `you need to wait ${timeLeft} minutes before you try 5 more times`
-                );
-            } else {
-                let result;
-                if (chance >= 50) {
-                    result = "t";
-                } else {
-                    result = "h";
-                }
-                console.log(result);
-                if (old >= bet) {
-                    if (result == choice) {
-                        await memberSchema.findOneAndUpdate(
-                            { discordId: userId },
-                            { wallet: old + bet, coinflipLeft: left - 1 }
-                        );
-                        await interaction.reply(
-                            `Jeez ma boiii you won ${
-                                bet * 2
-                            } 🤩 your balance is \n Bank : ${
-                                ball.ballance
-                            }𝒱  \n wallet: ${ball.wallet + bet}𝒱`
-                        );
-                        if (left == 1) {
+            if (moment(date).isAfter(checkTimeout)) {
+                if (left > 0) {
+                    let result;
+                    if (chance >= 50) {
+                        result = "t";
+                    } else {
+                        result = "h";
+                    }
+                    console.log(result);
+                    if (old >= bet) {
+                        if (result == choice) {
                             await memberSchema.findOneAndUpdate(
                                 { discordId: userId },
-                                {
-                                    coinflipCooldown: expired,
-                                }
+                                { wallet: old + bet, coinflipLeft: left - 1 }
+                            );
+                            await interaction.reply(
+                                `Jeez ma boiii you won ${
+                                    bet * 2
+                                } 🤩 your balance is \n Bank : ${
+                                    ball.ballance
+                                }𝒱  \n wallet: ${ball.wallet + bet}𝒱`
+                            );
+                            if (left <= 1) {
+                                await memberSchema.findOneAndUpdate(
+                                    { discordId: userId },
+                                    {
+                                        coinflipCooldown: expired,
+                                        coinflipLeft: 5,
+                                    }
+                                );
+                            }
+                        } else {
+                            await memberSchema.findOneAndUpdate(
+                                { discordId: userId },
+                                { wallet: old - bet }
+                            );
+                            await interaction.reply(
+                                `unlucky man your choice was ${choice} and it was actually ${result} just lost ${bet} 😕 your balance is \n Bank : ${
+                                    ball.ballance
+                                }𝒱  \n wallet: ${ball.wallet - bet}𝒱`
                             );
                         }
                     } else {
-                        await memberSchema.findOneAndUpdate(
-                            { discordId: userId },
-                            { wallet: old - bet }
-                        );
-                        await interaction.reply(
-                            `unlucky man your choice was ${choice} and it was actually ${result} just lost ${bet} 😕 your balance is \n Bank : ${
-                                ball.ballance
-                            }𝒱  \n wallet: ${ball.wallet - bet}𝒱`
+                        interaction.reply(
+                            "psst...you don't have that much bro 🤦‍♂️"
                         );
                     }
-                } else {
-                    interaction.reply("psst...you don't have that much bro 🤦‍♂️");
                 }
+            } else {
+                interaction.reply(
+                    `you need to wait ${timeLeft} minutes before you try 5 more times`
+                );
             }
         } catch (err) {
             console.log(err);
