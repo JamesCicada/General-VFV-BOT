@@ -1,4 +1,6 @@
+const moment = require("moment");
 const mongoose = require("mongoose");
+const memberSchema = require("../Schemas/addToDB");
 
 module.exports = {
     name: "ready",
@@ -10,6 +12,8 @@ module.exports = {
                 keepAlive: true,
             });
             console.log("connected to mongoDB");
+            let date = moment(new Date().now).format("HH");
+            console.log(date);
         } catch (err) {
             console.log(err);
         }

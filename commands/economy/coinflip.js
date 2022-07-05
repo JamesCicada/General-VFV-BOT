@@ -31,42 +31,61 @@ module.exports = {
         let chance = Math.round(Math.random() * 100) + 1;
         let choice = interaction.options.getString("choice");
         let old = ball.wallet;
-        console.log(chance);
+        let left = ball.coinflipLeft;
+        let date = new Date().now;
+        let nowDate = moment(new Date().now).format();
+        let expired = moment(date).add({ hours: 1 }).format();
+        let checkTimeout = await ball.coinflipCooldown;
+        let timeLeft = await moment(checkTimeout).diff(nowDate, "minutes");
 
         try {
-            let result;
-            if (chance >= 50) {
-                result = "t";
+            if (!left || left == 0) {
+                interaction.reply(
+                    `you need to wait ${timeLeft} minutes before you try 5 more times`
+                );
             } else {
-                result = "h";
-            }
-            console.log(result);
-            if (old >= bet) {
-                if (result == choice) {
-                    await memberSchema.findOneAndUpdate(
-                        { discordId: userId },
-                        { wallet: old + bet }
-                    );
-                    await interaction.reply(
-                        `Jeez ma boiii you won ${
-                            bet * 2
-                        } 🤩 your balance is \n Bank : ${
-                            ball.ballance
-                        }𝒱  \n wallet: ${ball.wallet + bet}𝒱`
-                    );
+                let result;
+                if (chance >= 50) {
+                    result = "t";
                 } else {
-                    await memberSchema.findOneAndUpdate(
-                        { discordId: userId },
-                        { wallet: old - bet }
-                    );
-                    await interaction.reply(
-                        `unlucky man your choice was ${choice} and it was actually ${result} just lost ${bet} 😕 your balance is \n Bank : ${
-                            ball.ballance
-                        }𝒱  \n wallet: ${ball.wallet - bet}𝒱`
-                    );
+                    result = "h";
                 }
-            } else {
-                interaction.reply("psst...you don't have that much bro 🤦‍♂️");
+                console.log(result);
+                if (old >= bet) {
+                    if (result == choice) {
+                        await memberSchema.findOneAndUpdate(
+                            { discordId: userId },
+                            { wallet: old + bet, coinflipLeft: left - 1 }
+                        );
+                        await interaction.reply(
+                            `Jeez ma boiii you won ${
+                                bet * 2
+                            } 🤩 your balance is \n Bank : ${
+                                ball.ballance
+                            }𝒱  \n wallet: ${ball.wallet + bet}𝒱`
+                        );
+                        if (left == 1) {
+                            await memberSchema.findOneAndUpdate(
+                                { discordId: userId },
+                                {
+                                    coinflipCooldown: expired,
+                                }
+                            );
+                        }
+                    } else {
+                        await memberSchema.findOneAndUpdate(
+                            { discordId: userId },
+                            { wallet: old - bet }
+                        );
+                        await interaction.reply(
+                            `unlucky man your choice was ${choice} and it was actually ${result} just lost ${bet} 😕 your balance is \n Bank : ${
+                                ball.ballance
+                            }𝒱  \n wallet: ${ball.wallet - bet}𝒱`
+                        );
+                    }
+                } else {
+                    interaction.reply("psst...you don't have that much bro 🤦‍♂️");
+                }
             }
         } catch (err) {
             console.log(err);

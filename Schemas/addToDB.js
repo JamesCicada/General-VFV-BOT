@@ -30,5 +30,12 @@ const memberSchema = new mongoose.Schema({
     dailyCooldown: {
         type: String,
     },
+    coinflipCooldown: {
+        type: String,
+    },
+    coinflipLeft: {
+        type: Number,
+        default: 5,
+    },
 });
 module.exports = mongoose.model("memberModels", memberSchema);
