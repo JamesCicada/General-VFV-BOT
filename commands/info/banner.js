@@ -1,20 +1,24 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
+const { GuildBanManager } = require("discord.js");
 const randomColor = require("randomcolor");
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName("avatar")
-        .setDescription("Shows your or the mentioned user's avatar")
+        .setName("banner")
+        .setDescription("Shows your or the mentioned user's banner")
         .addUserOption((option) =>
             option
                 .setName("user")
                 .setDescription("whose avatar do you wanna check?")
         ),
 
-    async execute(interaction) {
+    async execute(interaction, client) {
         let color = randomColor().slice(1);
         let member = interaction.options.getUser("user") || interaction.user;
-        let avatar = member.displayAvatarURL({ size: 1024, dynamic: true });
+        let user = await client.users.fetch(member, {
+            force: true,
+        });
+        let banner = user.bannerURL({ size: 1024, dynamic: true });
         let embed = {
             embeds: [
                 {
@@ -26,11 +30,11 @@ module.exports = {
                         text: "VFV | V FOR VENDETTA",
                     },
                     image: {
-                        url: `${avatar}`,
+                        url: `${banner}`,
                     },
                     author: {
                         name: `${member.tag}`,
-                        icon_url: `${avatar}`,
+                        icon_url: `${banner}`,
                     },
                 },
             ],
