@@ -15,21 +15,21 @@ module.exports = {
         let date = new Date().now;
         let expired = moment(date).add({ minutes: 5 }).format();
         //let expiredNoFormat = moment(new Date().now).add({ minutes: 5 });
-        console.log(expired);
+
         //'2013-03-24T10:15:20:12Z';
         let timeoutCheck = await memberSchema.findOne({ discordId: userId });
         let checkTimeout = await timeoutCheck.begTimeout;
-        console.log(checkTimeout);
-        console.log(expired);
-        console.log(moment(checkTimeout).isAfter(expired));
-
+        //console.log(checkTimeout);
+        //console.log(expired);
+        //console.log(moment(checkTimeout).isAfter(expired));
+        //console.log(expired);
         try {
             if (moment(date).isSameOrAfter(checkTimeout) || checkTimeout == 0) {
                 await memberSchema.findOneAndUpdate(
                     { discordId: userId },
                     { wallet: old + pro, begTimeout: expired }
                 );
-                console.log(await memberSchema.findOne({ discordId: userId }));
+                //console.log(await memberSchema.findOne({ discordId: userId }));
                 await interaction.reply(`you made ${pro}𝒱`);
             } else {
                 interaction.reply(

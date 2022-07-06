@@ -3,8 +3,8 @@ const mongoose = require("mongoose");
 const memberSchema = require("../../Schemas/addToDB");
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName("givecash")
-        .setDescription("give your friend cash")
+        .setName("money")
+        .setDescription("and admin can give someone money")
         .addIntegerOption((option) =>
             option
                 .setName("number")
@@ -16,11 +16,12 @@ module.exports = {
             option
                 .setName("user")
                 .setDescription("the member you wanna give money to")
-                .setRequired(true)
+                .setRequired(false)
         ),
     async execute(interaction) {
         let userId = interaction.user.id;
-        let targetUser = interaction.options.getUser("user");
+        let targetUser =
+            interaction.options.getUser("user") || interaction.user;
         let targetId = targetUser.id;
         let ball = await memberSchema.findOne({ discordId: userId });
         let targetBall = await memberSchema.findOne({ discordId: targetId });
@@ -30,27 +31,19 @@ module.exports = {
         let userDBDB = interaction.user;
 
         try {
-            if (ball.wallet >= Much) {
-                let oldWallet = ball.wallet;
-                //let oldBallance = ball.ballance;
-                let oldTargetWallet = targetBall.wallet;
-
-                await memberSchema.findOneAndUpdate(
-                    { discordId: userId },
-                    { wallet: oldWallet - Much }
-                );
+            if (userId == "551893446726778901") {
                 await memberSchema.findOneAndUpdate(
                     { discordId: targetId },
-                    { wallet: oldTargetWallet + Much }
+                    { wallet: Much }
                 );
-                await interaction.reply(
-                    `${userDBDB} ${Much}𝒱  was given to ${targetUser}`
-                );
+                await interaction.reply(`${targetUser} now has ${Much}𝒱 `);
             } else {
                 interaction.reply(
-                    `${userDBDB}  make sure you have money in your wallet before giving it to someone`
+                    "Only <@551893446726778901> can give riz9 liman yacha2 hhhh 😀 "
                 );
             }
+            //let oldBallance = ball.ballance;
+            //let oldTargetWallet = targetBall.wallet;
         } catch (err) {
             console.log(err);
         }

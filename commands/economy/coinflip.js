@@ -24,7 +24,7 @@ module.exports = {
                 .setRequired(true)
         ),
     async execute(interaction) {
-        let username = interaction.user.username;
+        //let username = interaction.user.username;
         let bet = interaction.options.getInteger("many");
         let userId = interaction.user.id;
         let ball = await memberSchema.findOne({ discordId: userId });
@@ -48,7 +48,7 @@ module.exports = {
                     } else {
                         result = "h";
                     }
-                    console.log(result);
+                    //console.log(result);
                     if (old >= bet) {
                         if (result == choice) {
                             await memberSchema.findOneAndUpdate(

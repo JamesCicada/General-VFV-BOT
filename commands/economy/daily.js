@@ -34,7 +34,7 @@ module.exports = {
         let minutesLast = `0.${minutes}` * 60;
         let hours = Math.floor(timeLeftMin);
         let leftMinutes = Math.round(minutesLast);
-        console.log(leftMinutes);
+        //console.log(leftMinutes);
 
         try {
             if (moment(date).isSameOrAfter(checkTimeout) || !checkTimeout) {
@@ -42,7 +42,7 @@ module.exports = {
                     { discordId: userId },
                     { ballance: old + pro, dailyCooldown: expired }
                 );
-                console.log(await memberSchema.findOne({ discordId: userId }));
+                //console.log(await memberSchema.findOne({ discordId: userId }));
                 await interaction.reply(
                     `you made ${pro}𝒱 today come back tomorrow to get your next daily`
                 );
