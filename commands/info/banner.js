@@ -1,5 +1,4 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
-const { GuildBanManager } = require("discord.js");
 const randomColor = require("randomcolor");
 
 module.exports = {
@@ -18,7 +17,7 @@ module.exports = {
         let user = await client.users.fetch(member, {
             force: true,
         });
-        let banner = user.bannerURL({ size: 1024, dynamic: true });
+        let banner = user.bannerURL({ size: 2048, dynamic: true });
         let embed = {
             embeds: [
                 {
@@ -39,10 +38,15 @@ module.exports = {
                 },
             ],
         };
-        await interaction.reply(embed);
-        /*member.fetch(member.id, false).then((user) => {
-            user.send(`${member} checked your Avatar`);
-        });*/
+        try {
+            if (!banner) {
+                interaction.reply(`${member} doesn't have a banner❗`);
+            } else {
+                await interaction.reply(embed);
+            }
+        } catch (err) {
+            console.log(err);
+        }
     },
 };
 //DONE*/

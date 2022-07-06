@@ -5,11 +5,19 @@ module.exports = {
     once: true,
     async execute(interaction, client) {
         if (!interaction.isCommand()) return;
-        let userId = interaction.user.id;
-        let username = interaction.user.username;
-        let ball = await memberSchema.findOne({ discordId: userId });
+        let userId;
+        let ball;
         try {
+            if (!interaction.options.getUser("user")) {
+                username = interaction.user.username;
+                userId = interaction.user.id;
+            } else {
+                username = interaction.options.getUser("user").username;
+                userId = interaction.options.getUser("user").id;
+            }
+            ball = await memberSchema.findOne({ discordId: userId });
             if (!ball) {
+                console.log(username.username);
                 await new memberSchema({
                     username: username,
                     discordId: userId,
