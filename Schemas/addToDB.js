@@ -37,5 +37,15 @@ const memberSchema = new mongoose.Schema({
         type: Number,
         default: 5,
     },
+    textXp: {
+        type: Number,
+        default: 0,
+    },
+    voiceXp: {
+        type: Number,
+    },
+    bonus: {
+        type: Number,
+    },
 });
 module.exports = mongoose.model("memberModels", memberSchema);

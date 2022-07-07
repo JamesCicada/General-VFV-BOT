@@ -17,7 +17,7 @@ module.exports = {
             }
             ball = await memberSchema.findOne({ discordId: userId });
             if (!ball) {
-                console.log(username.username);
+                //console.log(username.username);
                 await new memberSchema({
                     username: username,
                     discordId: userId,
