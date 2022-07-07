@@ -9,6 +9,10 @@ const memberSchema = new mongoose.Schema({
         required: true,
         unique: true,
     },
+    guildId: {
+        type: Number,
+        required: true,
+    },
     wallet: {
         type: Number,
         required: true,
@@ -46,6 +50,10 @@ const memberSchema = new mongoose.Schema({
     },
     bonus: {
         type: Number,
+    },
+    isOwner: {
+        type: Boolean,
+        default: false,
     },
 });
 module.exports = mongoose.model("memberModels", memberSchema);

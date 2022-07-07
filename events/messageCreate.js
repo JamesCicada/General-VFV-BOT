@@ -1,5 +1,10 @@
 const mongoose = require("mongoose");
 const memberSchema = require("../Schemas/addToDB");
+const Levels = require("discord-xp");
+require("dotenv").config();
+Levels.setURL(
+    "mongodb+srv://James:James2002@discord.xoems.mongodb.net/?retryWrites=true&w=majority"
+);
 module.exports = {
     name: "messageCreate",
     // add xp for every message
@@ -10,12 +15,27 @@ module.exports = {
             let userId = message.author.id;
             let ball = await memberSchema.findOne({ discordId: userId });
             let oldXp = ball.textXp;
-            let xp = 5;
+            let xp = Math.floor(Math.random() * 12) + 1;
+            const hasLeveledUp = await Levels.appendXp(
+                message.author.id,
+                message.guild.id,
+                xp
+            );
+            if (hasLeveledUp) {
+                const user = await Levels.fetch(
+                    message.author.id,
+                    message.guild.id
+                );
+                message.channel.send(
+                    `${message.author} 🎇🎉 congrats knee grow you just reached Level ${user.level} keep it going lil knee Gah 🎊`
+                );
+            }
+
             await memberSchema.findOneAndUpdate(
                 { discordId: userId },
                 { textXp: oldXp + xp }
             );
-            console.log("he took xp lol");
+            //console.log("he took xp lol");
         }
         return;
 
