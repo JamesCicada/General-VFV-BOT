@@ -13,23 +13,34 @@ module.exports = {
                 .setMaxValue(100)
                 .setMinValue(1)
         ),
-    async execute(interaction) {
+    async execute(interaction, client) {
         let numberOfMessages = interaction.options.getInteger("number");
         let channel = interaction.channel;
-        try {
-            if (interaction.member.permissions.has("MANAGE_MESSAGES")) {
-                await channel.bulkDelete(numberOfMessages).then(() => {
-                    interaction.reply(
-                        "`Deleted " + numberOfMessages + " messages`"
-                    );
-                    setTimeout(() => interaction.deleteReply(), 3000);
-                });
+        let channelSize = client.channels.cache.get(`${channel.id}`);
+        channelSize.messages.fetch({ limit: 100 }).then((messages) => {
+            //console.log(`Received ${messages.size} messages`);
+            //Iterate through the messages here with the variable "messages".);
+            let messagesInChannel;
+            if (messages.size >= numberOfMessages) {
+                messagesInChannel = numberOfMessages;
             } else {
-                interaction.reply("you don't have permission to do that");
+                messagesInChannel = messages.size;
             }
-        } catch (err) {
-            console.log(err);
-        }
+            try {
+                if (interaction.member.permissions.has("MANAGE_MESSAGES")) {
+                    channel.bulkDelete(numberOfMessages).then(() => {
+                        interaction.reply(
+                            "`Deleted " + messagesInChannel + " messages.`"
+                        );
+                        setTimeout(() => interaction.deleteReply(), 3000);
+                    });
+                } else {
+                    interaction.reply("you don't have permission to do that");
+                }
+            } catch (err) {
+                console.log(err);
+            }
+        });
     },
 };
 //DONE

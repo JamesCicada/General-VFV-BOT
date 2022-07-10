@@ -27,7 +27,7 @@ module.exports = {
                     message.guild.id
                 );
                 message.channel.send(
-                    `${message.author} 🎇🎉 congrats knee grow you just reached Level ${user.level} keep it going lil knee Gah 🎊`
+                    `${message.author} 🎇🎉 congrats My G you reached level ${user.level} keep it going ma boii 🖤🎊`
                 );
             }
 

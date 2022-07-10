@@ -51,7 +51,8 @@ module.exports = {
                     "`you still need to wait " +
                         hours +
                         " hours " +
-                        leftMinutes +
+                        leftMinutes -
+                        1 +
                         " minutes`"
                 );
             }

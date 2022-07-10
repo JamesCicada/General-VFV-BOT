@@ -19,7 +19,7 @@ module.exports = {
             .setThumbnail(user.avatarURL({ dynamic: true, size: 512 }))
             .setDescription(`Hi ${member} Welcome to **${guild.name}**\n
             Account Created <t:${parseInt(user.createdTimestamp / 1000)}:R>\n
-            Now we are **${guild.memberCount}** members`);
+            Now we are now **${guild.memberCount}** members we love y'all 💞`);
         Welcomer.send({ embeds: [Welcome] });
         try {
             let userId = user.id;

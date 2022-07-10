@@ -33,7 +33,7 @@ module.exports = {
                 );
             } else {
                 interaction.reply(
-                    `${userDBDB}  you don't have tha much money kiddo`
+                    `${userDBDB} you don't have tha much money kiddo`
                 );
             }
         } catch (err) {

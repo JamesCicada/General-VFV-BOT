@@ -128,7 +128,7 @@ module.exports = {
             interaction.guild.id
         );
         interaction.reply(
-            `${interaction.user} 👨🏿 sup knee grow you are Level ${user.level} keep it going lil knee Gah 🐵 and you have ${user.xp}`
+            `${interaction.user} Hey Man Your currently at Level ${user.level} and you have ${user.xp || 0} xp`
         );
     },
 };

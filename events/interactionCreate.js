@@ -3,7 +3,7 @@ const memberSchema = require("../Schemas/addToDB");
 
 module.exports = {
     name: "interactionCreate",
-    once: true,
+    ////////////////////
     async execute(interaction, client) {
         if (!interaction.isCommand()) return;
         let userId;

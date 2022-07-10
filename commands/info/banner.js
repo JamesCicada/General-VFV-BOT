@@ -21,7 +21,7 @@ module.exports = {
         let embed = {
             embeds: [
                 {
-                    title: "How Gorgeous! <3",
+                    title: "what a cool banner Buddy",
                     color: color,
                     footer: {
                         icon_url:
