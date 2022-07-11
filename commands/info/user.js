@@ -11,7 +11,6 @@ module.exports = {
                 .setDescription("the user you wanna check")
                 .setRequired(false)
         ),
-
     async execute(interaction) {
         try {
             let target =
@@ -19,10 +18,24 @@ module.exports = {
             let targetMember =
                 interaction.options.getMember("user") || interaction.member;
             let creation = moment.utc(target.createdAt).format("YYYY/MM/DD");
-            let joined = moment.utc(targetMember.joinedAt).format("YYYY/MM/DD");
-            let joinAge = moment(joined).fromNow(true);
-            let accountAge = moment(creation).fromNow(true);
+            let joined;
+            let joinAge;
+            let accountAge = `<t:${parseInt(
+                target.createdTimestamp / 1000
+            )}:R>`;
             let avatar = target.displayAvatarURL({ size: 1024, dynamic: true });
+            let guild = interaction.guild;
+            let isInServer = guild.members.cache.get(target.id);
+            //console.log(guild);
+            if (!isInServer) {
+                joinAge = `${target.username} is not in this  server`;
+                joined = ``;
+            } else {
+                joinAge = `<t:${parseInt(
+                    targetMember.joinedTimestamp / 1000
+                )}:R>`;
+                joined = moment.utc(targetMember.joinedAt).format("YYYY/MM/DD");
+            }
             let embed = {
                 embeds: [
                     {
