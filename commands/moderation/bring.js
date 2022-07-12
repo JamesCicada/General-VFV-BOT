@@ -18,20 +18,26 @@ module.exports = {
             let user = interaction.user;
             let userMember = interaction.member;
             let targetChannel = interaction.member.voice.channel;
-            if (!targetMember.voice.channel) {
-                await interaction.reply(
-                    `${targetMember} is not in a voice channel`
-                );
-                return;
-            } else if (!userMember.voice.channel) {
-                await interaction.reply(
-                    "you need to join a voice channel first"
+            if (target == user) {
+                interaction.reply(
+                    `https://i.kym-cdn.com/entries/icons/mobile/000/023/397/C-658VsXoAo3ovC.jpg`
                 );
             } else {
-                await targetMember.voice.setChannel(targetChannel);
-                await interaction.reply(
-                    `i moved ${targetMember} to you in ${targetChannel}`
-                );
+                if (!targetMember.voice.channel) {
+                    await interaction.reply(
+                        `${targetMember} is not in a voice channel`
+                    );
+                    return;
+                } else if (!userMember.voice.channel) {
+                    await interaction.reply(
+                        "you need to join a voice channel first"
+                    );
+                } else {
+                    await targetMember.voice.setChannel(targetChannel);
+                    await interaction.reply(
+                        `i moved ${targetMember} to ${targetChannel}`
+                    );
+                }
             }
 
             //console.log(member, newNick);

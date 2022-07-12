@@ -44,7 +44,7 @@ module.exports = {
         };
         try {
             const banned = await interaction.guild.bans.fetch(memberCheck);
-            console.log(banned);
+            //console.log(banned);
             /*const bannedUser = banList.find(
                 (user) => user.id === `${memberCheck}`
             );*/

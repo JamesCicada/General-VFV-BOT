@@ -8,7 +8,7 @@ module.exports = {
     async execute(interaction) {
         let channel = interaction.channel;
         channel.permissionOverwrites.edit("983382080597684254", {
-            VIEW_CHANNEL: true,
+            //VIEW_CHANNEL: true,
             SEND_MESSAGES: true,
             READ_MESSAGE_HISTORY: true,
             ATTACH_FILES: true,

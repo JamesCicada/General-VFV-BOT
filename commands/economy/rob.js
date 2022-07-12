@@ -35,7 +35,7 @@ module.exports = {
             } else if (oldTargetWallet <= 0 || oldTargetWallet <= Much) {
                 interaction.reply(`${targetUser} is actually broke lol 😅`);
             } else {
-                if (chance <= 20) {
+                if (chance <= 30) {
                     await memberSchema.findOneAndUpdate(
                         { discordId: targetId },
                         { wallet: oldTargetWallet - Much }

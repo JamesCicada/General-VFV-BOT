@@ -34,14 +34,15 @@ module.exports = {
         let left = ball.coinflipLeft;
         let date = new Date().now;
         let nowDate = moment(new Date().now).format();
-        let expired = moment(date).add({ hours: 1 }).format();
+        let expired = moment(date).add({ minutes: 20 }).format();
         let checkTimeout = await ball.coinflipCooldown;
         let timeLeft = await moment(checkTimeout).diff(nowDate, "minutes");
         //console.log(timeLeft);
 
         try {
-            if (moment(date).isAfter(checkTimeout)) {
-                if (left > 0) {
+            console.log(moment(date).isAfter(checkTimeout));
+            if (moment(date).isAfter(checkTimeout) || !checkTimeout) {
+                if (left >= 0) {
                     let result;
                     if (chance >= 50) {
                         result = "t";
@@ -74,13 +75,22 @@ module.exports = {
                         } else {
                             await memberSchema.findOneAndUpdate(
                                 { discordId: userId },
-                                { wallet: old - bet }
+                                { wallet: old - bet, coinflipLeft: left - 1 }
                             );
                             await interaction.reply(
                                 `unlucky man your choice was ${choice} and it was actually ${result} just lost ${bet} 😕 your balance is \n Bank : ${
                                     ball.ballance
                                 }𝒱  \n wallet: ${ball.wallet - bet}𝒱`
                             );
+                            if (left <= 1) {
+                                await memberSchema.findOneAndUpdate(
+                                    { discordId: userId },
+                                    {
+                                        coinflipCooldown: expired,
+                                        coinflipLeft: 5,
+                                    }
+                                );
+                            }
                         }
                     } else {
                         interaction.reply(
@@ -90,7 +100,9 @@ module.exports = {
                 }
             } else {
                 interaction.reply(
-                    `you need to wait ${timeLeft} minutes before you try 5 more times`
+                    "`you need to wait " +
+                        timeLeft +
+                        " minutes before you try 5 more times`"
                 );
             }
         } catch (err) {

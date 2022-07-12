@@ -26,21 +26,20 @@ module.exports = {
         let ball = await memberSchema.findOne({ discordId: userId });
         let targetBall = await memberSchema.findOne({ discordId: targetId });
         let Much = interaction.options.getInteger("number");
+        let ownerCheck = ball.isOwner;
 
         //console.log(ball.cooldown);
         let userDBDB = interaction.user;
 
         try {
-            if (userId == "551893446726778901") {
+            if (ownerCheck) {
                 await memberSchema.findOneAndUpdate(
                     { discordId: targetId },
                     { wallet: Much }
                 );
                 await interaction.reply(`${targetUser} now has ${Much}𝒱 `);
             } else {
-                interaction.reply(
-                    "Only <@551893446726778901> can give riz9 liman yacha2 hhhh 😀 "
-                );
+                interaction.reply("only the server owner can give money");
             }
             //let oldBallance = ball.ballance;
             //let oldTargetWallet = targetBall.wallet;

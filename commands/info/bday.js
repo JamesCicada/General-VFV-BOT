@@ -50,11 +50,11 @@ module.exports = {
                     } else {
                         let birthYear = ball.bday.toString().slice(11, 15);
                         let birth = ball.bday.toString().slice(4, 15);
-                        console.log(birthYear);
+                        //console.log(birthYear);
                         let date = new Date();
-                        console.log(date.getFullYear());
+                        //console.log(date.getFullYear());
                         let age = date.getFullYear() - parseInt(birthYear);
-                        console.log(age);
+                        //console.log(age);
                         interaction.reply(
                             `${targettedUser} was born in ${birth} (${age} years old)`
                         );

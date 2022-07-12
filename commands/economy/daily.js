@@ -31,9 +31,10 @@ module.exports = {
         );
         //console.log(timeLeftMin);
         let minutes = timeLeftMin.toString().split(".").pop();
+        //console.log(minutes);
         let minutesLast = `0.${minutes}` * 60;
         let hours = Math.floor(timeLeftMin);
-        let leftMinutes = Math.round(minutesLast);
+        let leftMinutes = Math.floor(minutesLast);
         //console.log(leftMinutes);
 
         try {
@@ -51,8 +52,7 @@ module.exports = {
                     "`you still need to wait " +
                         hours +
                         " hours " +
-                        leftMinutes -
-                        1 +
+                        leftMinutes +
                         " minutes`"
                 );
             }

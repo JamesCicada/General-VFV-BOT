@@ -79,7 +79,7 @@ module.exports = {
                     ],
                 });
             if (!ownedChannel || voiceChannel.id !== ownedChannel) {
-                console.log(voiceChannel.id);
+                //console.log(voiceChannel.id);
                 interaction.reply({
                     embeds: [
                         Embed.setDescription(

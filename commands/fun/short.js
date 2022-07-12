@@ -13,15 +13,19 @@ module.exports = {
         ),
     async execute(interaction) {
         let baseUrl = interaction.options.getString("url");
-        if (!baseUrl.includes(".")) {
-            interaction.reply({
-                content: "this is not a url (i.e www.google.com)",
-                ephemeral: true,
-            });
-        } else {
-            shortUrl.short(`${baseUrl}`, function (err, url) {
-                interaction.reply(url);
-            });
+        try {
+            if (!baseUrl.includes(".")) {
+                interaction.reply({
+                    content: "this is not a url (i.e www.google.com)",
+                    ephemeral: true,
+                });
+            } else {
+                shortUrl.short(`${baseUrl}`, function (err, url) {
+                    interaction.reply(url);
+                });
+            }
+        } catch (err) {
+            console.log(err);
         }
     },
 };

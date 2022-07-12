@@ -123,12 +123,16 @@ module.exports = {
                     ],
                 });
             }*/
+
         const user = await Levels.fetch(
             interaction.user.id,
             interaction.guild.id
         );
+        var xpRequired = Levels.xpFor(user.level + 1);
         interaction.reply(
-            `${interaction.user} Hey Man Your currently at Level ${user.level} and you have ${user.xp || 0} xp`
+            `${interaction.user} Hey Man Your currently at Level ${
+                user.level
+            } and you have ${user.xp || 0} / ${xpRequired} xp`
         );
     },
 };
