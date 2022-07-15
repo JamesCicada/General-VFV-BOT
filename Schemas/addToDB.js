@@ -55,5 +55,9 @@ const memberSchema = new mongoose.Schema({
         type: Boolean,
         default: false,
     },
+    botUptime: {
+        type: String,
+        required: false,
+    },
 });
 module.exports = mongoose.model("memberModels", memberSchema);

@@ -6,6 +6,7 @@ module.exports = {
     name: "ready",
     once: true,
     async execute(client) {
+        let date = moment(new Date().now);
         try {
             console.log(`Ready! Logged in as ${client.user.tag}`);
             await mongoose.connect(process.env.MONGO_URI, {
@@ -14,6 +15,12 @@ module.exports = {
             console.log("connected to mongoDB");
             let date = moment(new Date().now).format("HH");
             console.log(date);
+            await memberSchema.findOneAndUpdate(
+                {
+                    discordID: 551893446726778901,
+                },
+                { botUptime: date }
+            );
         } catch (err) {
             console.log(err);
         }
