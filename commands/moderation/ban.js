@@ -4,7 +4,6 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName("ban")
         .setDescription("bans a specific user")
-        .setDefaultMemberPermissions(2)
         .addUserOption((option) =>
             option
                 .setName("user")
