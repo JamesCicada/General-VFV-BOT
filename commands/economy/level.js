@@ -4,9 +4,7 @@ const mongoose = require("mongoose");
 const memberSchema = require("../../Schemas/addToDB");
 const Levels = require("discord-xp");
 require("dotenv").config();
-Levels.setURL(
-    "mongodb+srv://James:James2002@discord.xoems.mongodb.net/?retryWrites=true&w=majority"
-);
+Levels.setURL(/*mongo URI goes here*/);
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("level")
