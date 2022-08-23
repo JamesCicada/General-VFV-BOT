@@ -2,7 +2,9 @@ const mongoose = require("mongoose");
 const memberSchema = require("../Schemas/addToDB");
 const Levels = require("discord-xp");
 require("dotenv").config();
-Levels.setURL(/*Mongo URI goes here*/);
+Levels.setURL(
+    "mongodb+srv://James:James2002@discord.xoems.mongodb.net/?retryWrites=true&w=majority"
+);
 module.exports = {
     name: "messageCreate",
     // add xp for every message
