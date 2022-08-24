@@ -35,6 +35,7 @@
     "discord-xp": "^1.1.16",
     "discord.js": "^13.0.0",
     "distube": "^3.3.4",
+    "@distube/yt-dlp":"^1.0.0",
     "dotenv": "^16.0.1",
     "ffmpeg": "^0.0.4",
     "ffmpeg-static": "^4.4.1",
