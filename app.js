@@ -23,17 +23,8 @@ const client = new Client({
 const fs = require("fs");
 const mongoose = require("mongoose");
 require("dotenv").config();
-const { DisTube } = require("distube");
-const { YtDlpPlugin } = require("@distube/yt-dlp");
-const { SpotifyPlugin } = require("@distube/spotify");
 const testSchema = require("./Schemas/addToDB");
 
-client.distube = new DisTube(client, {
-    emitNewSongOnly: true,
-    leaveOnFinish: true,
-    emitAddSongWhenCreatingQueue: false,
-    plugins: [new SpotifyPlugin(), new YtDlpPlugin()],
-});
 client.voiceGenerator = new Collection();
 
 /*client.on("voiceStateUpdate", (oldState, newState) => {

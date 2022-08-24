@@ -2,11 +2,10 @@ const { SlashCommandBuilder } = require("@discordjs/builders");
 const { MessageEmbed } = require("discord.js");
 const mongoose = require("mongoose");
 const memberSchema = require("../../Schemas/addToDB");
+const URI = process.env.MONGO_URI;
 const Levels = require("discord-xp");
 require("dotenv").config();
-Levels.setURL(
-    "mongodb+srv://James:James2002@discord.xoems.mongodb.net/?retryWrites=true&w=majority"
-);
+Levels.setURL(`${URI}`);
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("level")
@@ -123,16 +122,19 @@ module.exports = {
                     ],
                 });
             }*/
-
-        const user = await Levels.fetch(
-            interaction.user.id,
-            interaction.guild.id
-        );
-        var xpRequired = Levels.xpFor(user.level + 1);
-        interaction.reply(
-            `${interaction.user} Hey Man Your currently at Level ${
-                user.level
-            } and you have ${user.xp || 0} / ${xpRequired} xp`
-        );
+        try {
+            const user = await Levels.fetch(
+                interaction.user.id,
+                interaction.guild.id
+            );
+            var xpRequired = Levels.xpFor(user.level + 1);
+            interaction.reply(
+                `${interaction.user} Hey Man Your currently at Level ${
+                    user.level
+                } and you have ${user.xp || 0} / ${xpRequired} xp`
+            );
+        } catch (err) {
+            console.log(err);
+        }
     },
 };
