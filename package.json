@@ -30,7 +30,7 @@
     "@discordjs/rest": "^0.6.0-dev.1654646876-ecc6600",
     "@discordjs/voice": "^0.10.0",
     "@distube/spotify": "^1.2.1",
-    "@distube/yt-dlp": "^1.0.2",
+    "@distube/yt-dlp": "^1.1.3",
     "discord-api-types": "^0.33.5",
     "discord-player": "^5.2.2",
     "discord-xp": "^1.1.16",
