@@ -24,6 +24,7 @@ const fs = require("fs");
 const mongoose = require("mongoose");
 require("dotenv").config();
 const testSchema = require("./Schemas/addToDB");
+const vcSchema = require("./Schemas/vcSchema");
 
 client.voiceGenerator = new Collection();
 

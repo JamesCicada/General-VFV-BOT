@@ -1,4 +1,5 @@
 const { VoiceState } = require("discord.js");
+const vcSchema = require("./Schemas/vcSchema");
 
 module.exports = {
     name: "voiceStateUpdate",

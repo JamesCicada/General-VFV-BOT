@@ -1,5 +1,6 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
 const { MessageEmbed, CommandInteraction } = require("discord.js");
+const vcSchema = require("./Schemas/vcSchema");
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -68,6 +69,15 @@ module.exports = {
         const voiceChannel = interaction.member.voice.channel;
         const Embed = new MessageEmbed().setColor("RANDOM");
         const ownedChannel = client.voiceGenerator.get(interaction.member.id);
+        await new memberSchema({
+            channelID: voiceChannel.id,
+            guildID: interaction.guildId,
+            ownerID: ownedChannel.id,
+        })
+            .save()
+            .then(console.log("added a user to db successffully"));
+        let dbData = await memberSchema.findOne({ ownerID: ownedChannel });
+        let channelOwner = dbData.ownerId;
         const { options, member, guild } = interaction;
         try {
             if (!voiceChannel)
@@ -78,7 +88,7 @@ module.exports = {
                         ),
                     ],
                 });
-            if (!ownedChannel || voiceChannel.id !== ownedChannel) {
+            if (!channelOwner || voiceChannel.id !== channelOwner) {
                 //console.log(voiceChannel.id);
                 interaction.reply({
                     embeds: [
