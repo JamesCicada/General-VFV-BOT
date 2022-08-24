@@ -3,13 +3,11 @@ const vcSchema = new mongoose.Schema({
     channelID: {
         type: Number,
     },
-    guildId: {
+    guildID: {
         type: Number,
-        required: true,
     },
     ownerID: {
         type: Number,
-        unique: true,
     },
     channelName: {
         type: String,

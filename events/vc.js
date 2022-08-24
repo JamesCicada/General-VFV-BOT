@@ -1,5 +1,5 @@
 const { VoiceState } = require("discord.js");
-const vcSchema = require("./Schemas/vcSchema");
+const vcSchema = require("../Schemas/vcSchema");
 
 module.exports = {
     name: "voiceStateUpdate",
@@ -33,6 +33,7 @@ module.exports = {
                 await newChannel.permissionOverwrites.edit(member, {
                     CONNECT: false,
                 });
+
                 setTimeout(
                     () => newChannel.permissionOverwrites.delete(member),
                     30 * 1000
@@ -51,7 +52,17 @@ module.exports = {
             ) {
                 client.voiceGenerator.set(member.id, null);
                 oldChannel.delete().catch(() => {});
+                await vcSchema.findOneAndDelete({ ownerID: member.id });
             }
+            //console.log(member.id);
+            //console.log(ownedChannel);
+            await new vcSchema({
+                //channelID: voiceChannel.id,
+                guildID: member.guildId,
+                channelID: ownedChannel,
+                ownerID: member.id,
+            })
+                .save();
         } catch (err) {
             console.log(err);
         }

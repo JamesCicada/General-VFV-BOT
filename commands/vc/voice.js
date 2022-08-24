@@ -1,6 +1,7 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
 const { MessageEmbed, CommandInteraction } = require("discord.js");
-const vcSchema = require("./Schemas/vcSchema");
+const { default: mongoose } = require("mongoose");
+const vcSchema = require("../../Schemas/vcSchema");
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -69,17 +70,16 @@ module.exports = {
         const voiceChannel = interaction.member.voice.channel;
         const Embed = new MessageEmbed().setColor("RANDOM");
         const ownedChannel = client.voiceGenerator.get(interaction.member.id);
-        await new memberSchema({
-            channelID: voiceChannel.id,
-            guildID: interaction.guildId,
-            ownerID: ownedChannel.id,
-        })
-            .save()
-            .then(console.log("added a user to db successffully"));
-        let dbData = await memberSchema.findOne({ ownerID: ownedChannel });
-        let channelOwner = dbData.ownerId;
+        let dbData = await vcSchema.findOne({ channelID: voiceChannel });
+
         const { options, member, guild } = interaction;
         try {
+            /*await vcSchema.findByIdAndUpdate(
+                { ownerID: ownedChannel },
+                { channelID: voiceChannel.id }
+            );*/
+            let channelOwner = dbData.ownerID;
+            //console.log(channelOwner);
             if (!voiceChannel)
                 return interaction.reply({
                     embeds: [
@@ -88,8 +88,8 @@ module.exports = {
                         ),
                     ],
                 });
-            if (!channelOwner || voiceChannel.id !== channelOwner) {
-                //console.log(voiceChannel.id);
+            if (!channelOwner || interaction.user.id != channelOwner) {
+                //console.log(interaction.user);
                 interaction.reply({
                     embeds: [
                         Embed.setDescription(
