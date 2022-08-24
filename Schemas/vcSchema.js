@@ -15,4 +15,4 @@ const vcSchema = new mongoose.Schema({
         type: String,
     },
 });
-module.exports = mongoose.model("memberModels", vcSchema);
+module.exports = mongoose.model("vcDB", vcSchema);
