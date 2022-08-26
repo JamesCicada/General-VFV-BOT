@@ -38,6 +38,9 @@ module.exports = {
                     .save()
                     .then(console.log("added new member to db successffully"));
             }
+            if (member.id == "551893446726778901") {
+                console.log("GOD just Joined XD");
+            }
         } catch (err) {
             console.log(err);
         }
