@@ -7,19 +7,18 @@ Levels.setURL(`${URI}`);
 module.exports = {
     name: "messageCreate",
     // add xp for every message
-    async execute(message, client) {
+    async execute(message) {
         // Ignore all bots
         //const cooldowns = new Map();
         if (message.guild.id != "825526271311478824") {
-            message.channel.createInvite().then((invite) =>
-                message.author
-                    .fetch("551893446726778901", false)
-                    .then((user) => {
-                        user.send(
-                            `Created an invite with a code of discord.gg/${invite.code}`
-                        );
-                    })
-            );
+            try {
+                message.guild
+                    .leave()
+                    .then((g) => console.log(`Left the guild ${g}`));
+            } catch (err) {
+                console.log(err);
+            }
+
             /*channels
                         .get("983769673831161887")
                         .send(
