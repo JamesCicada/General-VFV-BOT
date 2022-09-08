@@ -36,6 +36,6 @@ module.exports = {
             },
             console.log("connected to mongoDB for legacy commands")
         );*/
-        console.log("V FOR VENDETTA is online");
+        console.log(client.username + " is ready");
     },
 };

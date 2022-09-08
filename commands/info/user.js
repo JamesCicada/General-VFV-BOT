@@ -59,8 +59,8 @@ module.exports = {
                             width: 0,
                         },
                         footer: {
-                            text: `𝐕𝐅𝐕 | 𝐕 𝐅𝐎𝐑 𝐕𝐄𝐍𝐃𝐄𝐓𝐓𝐀`,
-                            icon_url: `https://cdn.discordapp.com/avatars/933341730827276318/57d817db788fb5e5b143795aab71a898.webp?size=1024`,
+                            text: `𝐄𝐥𝐢𝐳𝐚𝐛𝐞𝐭𝐡`,
+                            icon_url: `https://cdn.discordapp.com/avatars/933341730827276318/f1547942f7832a61b0557a4299fd988f.webp?size=1024`,
                         },
                     },
                 ],

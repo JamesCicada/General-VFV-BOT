@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
-const randomColor = require("randomcolor");
+//const randomColor = require("randomcolor");
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -12,7 +12,7 @@ module.exports = {
         ),
 
     async execute(interaction, client) {
-        let color = randomColor().slice(1);
+        //let color = randomColor().slice(1);
         let member = interaction.options.getUser("user") || interaction.user;
         let user = await client.users.fetch(member, {
             force: true,
@@ -22,11 +22,11 @@ module.exports = {
             embeds: [
                 {
                     title: "what a cool banner Buddy",
-                    color: color,
+                    color: "RANDOM",
                     footer: {
                         icon_url:
-                            "https://cdn.discordapp.com/avatars/933341730827276318/57d817db788fb5e5b143795aab71a898.webp?size=1024",
-                        text: "VFV | V FOR VENDETTA",
+                            "https://cdn.discordapp.com/avatars/933341730827276318/f1547942f7832a61b0557a4299fd988f.webp?size=1024",
+                        text: "𝐄𝐥𝐢𝐳𝐚𝐛𝐞𝐭𝐡",
                     },
                     image: {
                         url: `${banner}`,
