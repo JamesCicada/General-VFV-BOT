@@ -36,6 +36,6 @@ module.exports = {
             },
             console.log("connected to mongoDB for legacy commands")
         );*/
-        console.log(client.username + " is ready");
+        console.log("𝐄𝐥𝐢𝐳𝐚𝐛𝐞𝐭𝐡 is ready");
     },
 };
