@@ -88,7 +88,11 @@ module.exports = {
 
             // draw in to the server
             ctx.font = "40px sans-serif";
-            ctx.fillText(`to VFV`, dim.width / 2, dim.height - dim.margin - 50);
+            ctx.fillText(
+                `to 7HE SER7ER`,
+                dim.width / 2,
+                dim.height - dim.margin - 50
+            );
 
             const attachment = new Discord.MessageAttachment(
                 canvas.toBuffer(),

@@ -65,13 +65,25 @@ module.exports = {
                         .setMaxValue(99)
                         .setRequired(true)
                 )
+        )
+        .addSubcommand((option) =>
+            option
+                .setName("owner")
+                .setDescription("check the owner of this channel")
+                .addUserOption((option) =>
+                    option
+                        .setName("user")
+                        .setDescription("make somwone the owner of the channel")
+                        .setRequired(false)
+                )
         ),
     async execute(interaction, client) {
-        const voiceChannel = interaction.member.voice.channel;
+        const voiceChannel = interaction.member.voice.channel.id;
+        //console.log(voiceChannel);
         const Embed = new MessageEmbed().setColor("RANDOM");
         const ownedChannel = client.voiceGenerator.get(interaction.member.id);
         let dbData = await vcSchema.findOne({ channelID: voiceChannel });
-
+        console.log(dbData);
         const { options, member, guild } = interaction;
         try {
             /*await vcSchema.findByIdAndUpdate(
@@ -251,6 +263,36 @@ module.exports = {
                                         ),
                                     ],
                                 });
+                            }
+                        }
+                        break;
+                    case "owner":
+                        {
+                            const desiredOwner = options.getMember("user");
+                            if (!desiredOwner) {
+                                interaction.reply({
+                                    embeds: [
+                                        Embed.setDescription(
+                                            `the Current Owner Is <@${channelOwner}>`
+                                        ).setColor("GREEN"),
+                                    ],
+                                });
+                            } else if (interaction.user.id == channelOwner) {
+                                vcSchema.findOneAndUpdate(
+                                    {
+                                        ownerID: interaction.user.id,
+                                    },
+                                    {
+                                        ownerID: desiredOwner.id,
+                                    }
+                                );
+                                await interaction.reply(
+                                    `${interaction.user} made ${desiredOwner} the chennel's owner`
+                                );
+                            } else {
+                                interaction.reply(
+                                    "you are not the current owner of this channel"
+                                );
                             }
                         }
                         break;

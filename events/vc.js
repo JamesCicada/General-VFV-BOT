@@ -58,11 +58,10 @@ module.exports = {
             //console.log(ownedChannel);
             await new vcSchema({
                 //channelID: voiceChannel.id,
-                guildID: member.guildId,
+                guildID: member.guild.id,
                 channelID: ownedChannel,
                 ownerID: member.id,
-            })
-                .save();
+            }).save();
         } catch (err) {
             console.log(err);
         }
