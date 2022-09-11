@@ -21,6 +21,10 @@ module.exports = {
                 },
                 { botUptime: date }
             );
+            await client.guilds.cache
+                .get("825526271311478824")
+                .channels.cache.get("1018326992829042708")
+                .send(`𝐄𝐥𝐢𝐳𝐚𝐛𝐞𝐭𝐡 started`);
         } catch (err) {
             console.log(err);
         }
