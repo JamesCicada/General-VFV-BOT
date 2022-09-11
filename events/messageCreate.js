@@ -32,22 +32,24 @@ module.exports = {
                 )
                 .catch(console.error);*/
                     }
-                } else {
-                    if (
-                        message.content == "server" ||
-                        message.content == "invite"
-                    ) {
-                        message.reply("https://discord.gg/4X5TcQ3S29");
-                    } else {
-                        message.reply({
-                            embeds: [
-                                Embed.setDescription(
-                                    "someone will contact you as soon as possible \n make sure you described the problem and don't spam(you can send **server** or **invite** to get invited to the server)"
-                                ),
-                            ],
-                        });
+                } else if (message.channel.type === "DM") {
+                    {
+                        if (
+                            message.content == "server" ||
+                            message.content == "invite"
+                        ) {
+                            message.reply("https://discord.gg/4X5TcQ3S29");
+                        } else {
+                            message.reply({
+                                embeds: [
+                                    Embed.setDescription(
+                                        "someone will contact you as soon as possible \n make sure you described the problem and don't spam(you can send **server** or **invite** to get invited to the server)"
+                                    ),
+                                ],
+                            });
+                        }
                     }
-                }
+                } else return;
             } else return;
 
             if (!message.author.bot) {
