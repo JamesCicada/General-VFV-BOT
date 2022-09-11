@@ -85,9 +85,6 @@ client.on("messageCreate", async (message) => {
     if (message.author.bot) return;
     if (message.channel.type === "DM") {
         console.log(message.content);
-        message.reply(
-            "someone will contact you as soon as possible \n make sure you described the problem and don't spam"
-        );
         let color = randomColor().slice(1);
         let embed = {
             embeds: [
