@@ -13,7 +13,7 @@ module.exports = {
                 keepAlive: true,
             });
             console.log("connected to mongoDB");
-            let date = moment(new Date().now).format("HH");
+            let date = moment(new Date().now).format("YYYY/DD/MM hh:mm:ss");
             console.log(date);
             await memberSchema.findOneAndUpdate(
                 {

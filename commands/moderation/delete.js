@@ -10,37 +10,41 @@ module.exports = {
                 .setName("number")
                 .setDescription("how many message do you wanna delete?")
                 .setRequired(true)
-                .setMaxValue(100)
+                .setMaxValue(200)
                 .setMinValue(1)
         ),
     async execute(interaction, client) {
-        let numberOfMessages = interaction.options.getInteger("number");
-        let channel = interaction.channel;
-        let channelSize = client.channels.cache.get(`${channel.id}`);
-        channelSize.messages.fetch({ limit: 100 }).then((messages) => {
-            //console.log(`Received ${messages.size} messages`);
-            //Iterate through the messages here with the variable "messages".);
-            let messagesInChannel;
-            if (messages.size >= numberOfMessages) {
-                messagesInChannel = numberOfMessages;
+        try {
+            let channel = interaction.channel;
+            let number = interaction.options.getInteger("number");
+            let messages = await channel.messages.fetch({ limit: number });
+            // ignore messages that are older than 14 days
+            messages = messages.filter(
+                (m) => m.createdTimestamp > Date.now() - 12096e5
+            );
+            // ignore pinned messages
+            messages = messages.filter((m) => !m.pinned);
+            // ignore messages that are system messages
+            messages = messages.filter((m) => !m.system);
+            // now delete the messages
+            if (messages.size === 0) {
+                interaction.reply({
+                    content: "`There are no messages to delete`",
+                    ephemeral: true,
+                });
             } else {
-                messagesInChannel = messages.size;
-            }
-            try {
-                if (interaction.member.permissions.has("MANAGE_MESSAGES")) {
-                    channel.bulkDelete(numberOfMessages).then(() => {
-                        interaction.reply(
-                            "`Deleted " + messagesInChannel + " messages.`"
-                        );
-                        setTimeout(() => interaction.deleteReply(), 3000);
+                await channel.bulkDelete(messages).then((msg) => {
+                    interaction.reply({
+                        content: "`Deleted " + msg.size + " messages.`",
                     });
-                } else {
-                    interaction.reply("you don't have permission to do that");
-                }
-            } catch (err) {
-                console.log(err);
+                    setTimeout(() => {
+                        interaction.deleteReply();
+                    }, 5000);
+                });
             }
-        });
+        } catch (err) {
+            console.log(err);
+        }
     },
 };
 //DONE

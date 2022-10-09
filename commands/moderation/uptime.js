@@ -6,20 +6,21 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName("uptime")
         .setDescription("when did the bot restart"),
-    async execute(interaction) {
-        let uptime = memberSchema.findOne({
-            discordId: 551893446726778901,
-        });
-        let botUptime = moment(uptime.botUptime).from();
-        let exactUptime = moment(uptime.botUptime).format(
-            "YYYY/MM/DD hh:mm:ss"
-        );
-        interaction.reply(
-            "` the bot has been up for " +
-                botUptime +
-                " exactly since " +
-                exactUptime +
-                "`"
-        );
+    async execute(interaction, client) {
+        let uptime = client.uptime;
+        let messageUptime = `${moment(uptime).format("DD") - 1} days, ${moment(
+            uptime
+        ).format("HH")} hours, ${moment(uptime).format("mm")} minutes, ${moment(
+            uptime
+        ).format("ss")} seconds`;
+        interaction
+            .reply({
+                content: `Calculating...`,
+            })
+            .then(() => {
+                interaction.editReply({
+                    content: "`I have been up for " + messageUptime + "`",
+                });
+            });
     },
 };
