@@ -138,6 +138,14 @@ module.exports = {
                     .save()
                     .then(console.log("added new member to db successffully"));
             }
+            if (user.bot) {
+                return;
+            } else {
+                if(user.createdTimestamp < 60000 * 1440 * 3){
+                    member.
+                } {
+                await clientInformation.guild.channels.cache.get('1027488295338393660').send(`verified <@${user.id}>`)
+            }
         } catch (err) {
             console.log(err);
         }
